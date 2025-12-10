@@ -1,45 +1,135 @@
 <Window xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:vm="using:AlienUniverseDatabase.ViewModels"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        xmlns:viewModels="clr-namespace:AlienUniverseDatabase.ViewModels"
         x:Class="AlienUniverseDatabase.Views.MainWindow"
-        x:DataType="vm:MainWindowViewModel"
-        Icon="/Assets/avalonia-logo.ico"
-        Title="AlienUniverseDatabase">
+        Title="Filmy"
+        x:DataType="viewModels:MainWindowViewModel"
+        Height="1001" Width="1700">
 
-    <Design.DataContext>
-        <!-- This only sets the DataContext for the previewer in an IDE,
-             to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
+    <Window.DataContext>
         <vm:MainWindowViewModel/>
-    </Design.DataContext>
+    </Window.DataContext>
 
-    <Grid Margin="20">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="Auto"/>
-        </Grid.RowDefinitions>
-
-        <TextBlock Text="📽️ Alien Universe Database"
-                   FontSize="26" FontWeight="Bold"
-                   Margin="0 0 0 20"
-                   Foreground="#00FFAA"/>
-
-       
-        <ListBox x:Name="FilmsListBox"
-                 Grid.Row="1"
-                 SelectionMode="Single"
-                 Background="#1A1A1A" BorderBrush="#00FFAA"/>
-
-        
-        <StackPanel Grid.Row="2" Orientation="Horizontal"
-                    HorizontalAlignment="Right" Margin="0 15 0 0">
-            <Button Content="Dodaj film" Width="120" Margin="5"
-                    Background="#00AA88"/>
-            <Button Content="Usuń film" Width="120" Margin="5"
-                    Background="#AA0033"/>
+    <ScrollViewer>
+    <StackPanel>
+        <StackPanel
+            Orientation="Vertical" 
+            Margin="10, 15, 10, 10"
+            Spacing="8"
+            >
+            <TextBlock Text="Filmy:" FontWeight="Bold" Margin="0,0,0,5" FontSize="16"/>
+            <ListBox x:Name="FilmsList"
+                     ItemsSource="{Binding Films}"
+                     SelectedItem="{Binding SelectedItem}"
+            >
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal" Spacing="10">
+                            <TextBlock Text="{Binding TytulOryginalny}" FontWeight="Bold"/>
+                            <TextBlock Text="(" />
+                            <TextBlock  Text="{Binding Gatunek}"/>
+                            <TextBlock Text=")" />
+                        </StackPanel>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+            
         </StackPanel>
-    </Grid>
+        
+        
+        <Separator Margin="0, 5"/>
+        
+        <StackPanel 
+            Orientation="Vertical" 
+            Margin="10, 15, 10, 10"
+            Spacing="8"
+        >
+            <TextBlock Text="Wprowadź szczegóły nowego filmu:" FontWeight="Bold" FontSize="16" Margin="0,0,0,5"/>
+
+            <TextBlock Text="Tytuł:"/>
+            <TextBox Text="{Binding NewFilmEntry.TytulOryginalny}" Watermark="Np. Kosmita" />
+            
+            <TextBlock Text="Polski tytuł:"/>
+            <TextBox Text="{Binding NewFilmEntry.TytulPolski}"/>
+
+            <StackPanel Orientation="Horizontal" Spacing="15">
+                <StackPanel Width="120">
+                    <TextBlock Text="Rok:"/>
+                    <TextBox Text="{Binding NewFilmEntry.RokPremiery}" Watermark="2000" />
+                </StackPanel>
+                <StackPanel Width="120">
+                    <TextBlock Text="Długość: "/>
+                    <TextBox Text="{Binding NewFilmEntry.CzasTrwania}" Watermark="67" />
+                </StackPanel>
+                 <StackPanel Width="120">
+                    <TextBlock Text="Ocena:"/>
+                    <TextBox Text="{Binding NewFilmEntry.Ocena}" Watermark="6,7" />
+                </StackPanel>
+            </StackPanel>
+
+            <TextBlock Text="Reżyser:"/>
+            <TextBox Text="{Binding NewFilmEntry.Rezyser}"/>
+                
+            <TextBlock Text="Gatunek:"/>
+            <TextBox Text="{Binding NewFilmEntry.Gatunek}"/>
+
+            <TextBlock Text="Statek Kosmiczny:"/>
+            <TextBox Text="{Binding NewFilmEntry.Statek}"/>
+
+            <TextBlock Text="Opis Fabuły:"/>
+            <TextBox Text="{Binding NewFilmEntry.OpisFabuly}" Height="70" />
+
+            <TextBlock Text="Ciekawostka:"/>
+            <TextBox Text="{Binding NewFilmEntry.Ciekawostka}" Height="50" />
+            
+            <Separator Margin="0, 5"/>
+        </StackPanel>
+            
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Spacing="15" Margin="0, 15, 0, 0">
+    
+            <Button Content="Dodaj film"
+                    Command="{Binding AddItemCommand}"
+                    Width="150" 
+                    Height="35"
+            
+                    Background="White" 
+                    Foreground="Black"
+                    CornerRadius="8"
+                    FontWeight="SemiBold"
+                    HorizontalContentAlignment="Center"
+                    VerticalContentAlignment="Center"
+            />
+
+            <Button Content="Usuń zaznaczone"
+                    Command="{Binding RemoveFilmCommand}"
+                    CommandParameter="{Binding SelectedItem}"
+                    Width="150" 
+                    Height="35"
+            
+                    Background="White"
+                    Foreground="Black"
+                    CornerRadius="8"
+                    FontWeight="SemiBold"
+                    HorizontalContentAlignment="Center"
+                    VerticalContentAlignment="Center"
+            />
+            
+            <Button Content="Pokaż szczegóły"
+                    Command="{Binding SummaryButton}"
+                    Width="150" 
+                    Height="35"
+                    Background="White"  
+                    Foreground="Black"
+                    CornerRadius="8"
+                    FontWeight="SemiBold"
+                    HorizontalContentAlignment="Center"
+                    VerticalContentAlignment="Center"
+                    
+            />
+    
+        </StackPanel>
+        
+        </StackPanel>
+    </ScrollViewer>
 </Window>
