@@ -4,6 +4,7 @@ using System.Reactive;
 using System.Reactive.Linq;
 using AlienUniverseDatabase.Models;
 using ReactiveUI;
+using ReactiveUI.Fody.Helpers;
 
 namespace AlienUniverseDatabase.ViewModels;
 
