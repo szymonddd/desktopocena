@@ -1,0 +1,32 @@
+﻿<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:AlienUniverseDatabase.ViewModels"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="AlienUniverseDatabase.Views.CharactersWindow"
+        Icon="/Assets/avalonia-logo.ico"
+        Title="CharactersWindow"
+        x:DataType="vm:CharactersWindowViewModel">
+    <StackPanel>
+        <ListBox
+            ItemsSource="{Binding Postacie}"
+        >
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel>
+                        <TextBlock>
+                            <Run Text="{Binding ImieNazwisko}"/>
+                            <Run Text="{Binding FilmNazwa}"/>
+                            <Run Text="{Binding Rola}"/>
+                            <Run Text="{Binding Aktor}"/>
+                            <Run Text="{Binding Rasa}"/>
+                            <Run Text="{Binding RokUrodzenia}"/>
+                        </TextBlock>
+                    </StackPanel>
+                </DataTemplate>    
+            </ListBox.ItemTemplate>
+        </ListBox>
+        
+    </StackPanel>
+</Window>

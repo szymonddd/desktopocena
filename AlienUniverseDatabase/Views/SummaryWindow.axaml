@@ -1,0 +1,86 @@
+﻿<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:vm="clr-namespace:AlienUniverseDatabase.ViewModels"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="AlienUniverseDatabase.Views.SummaryWindow"
+        Title="SummaryWindow"
+        x:DataType="vm:SummaryWindowViewModel"
+        Height="500" Width="1000">
+    <StackPanel Margin="15" Spacing="10">
+        
+        <TextBlock Text="Szczegóły Wybranego Filmu" 
+                   FontSize="18" 
+                   FontWeight="Bold" 
+                   HorizontalAlignment="Center" 
+                   Margin="0,0,0,10"/>
+        
+        <TextBlock>
+            <Run Text="Tytuł: "/>
+            <Run Text="{Binding FilmDetails.TytulOryginalny}"/>
+        </TextBlock>
+
+        <TextBlock>
+            <Run Text="Tytuł Polski: "/>
+            <Run Text="{Binding FilmDetails.TytulPolski}"/>
+        </TextBlock>
+
+        <TextBlock>
+            <Run Text="Reżyser: "/>
+            <Run Text="{Binding FilmDetails.Rezyser}"/>
+        </TextBlock>
+
+        <TextBlock>
+            <Run Text="Rok: "/>
+            <Run Text="{Binding FilmDetails.RokPremiery}"/>
+        </TextBlock>
+        
+        <TextBlock>
+            <Run Text="Gatunek: "/>
+            <Run Text="{Binding FilmDetails.Gatunek}"/>
+        </TextBlock>
+        
+        <StackPanel Orientation="Horizontal">
+            <ProgressBar Minimum="0" Maximum="10" Value="{Binding FilmDetails.Ocena }" Height="20" Width="200" />
+            <TextBlock Text=" "></TextBlock>
+            <TextBlock Text="Ocena: " />
+            <TextBlock Text="{Binding FilmDetails.Ocena}" />
+            <TextBlock Text="/10"/>
+        </StackPanel>
+        
+        <TextBlock>
+            <Run Text="Bohaterowie: "/>
+            <Run Text="{Binding MainCharactersString}"/>
+        </TextBlock>
+        
+        <TextBlock>
+            <Run Text="Statek kosmiczny: "/>
+            <Run Text="{Binding FilmDetails.Statek}"/>
+        </TextBlock>
+        
+        <TextBlock>
+            <Run Text="Opis: "/>
+            <Run Text="{Binding FilmDetails.OpisFabuly}"/>
+        </TextBlock>
+        
+        <TextBlock>
+            <Run Text="Ciekawostka: "/>
+            <Run Text="{Binding FilmDetails.Ciekawostka}"/>
+        </TextBlock>
+        
+        <Button Content="Bohaterowie"
+                Command="{Binding CharactersButton }"
+                Width="150" 
+                Height="35"
+                Background="#EE0"  
+                Foreground="White"
+                CornerRadius="8"
+                FontWeight="SemiBold"
+                HorizontalContentAlignment="Center"
+                VerticalContentAlignment="Center"
+                    
+        />
+    </StackPanel>
+   
+</Window>
