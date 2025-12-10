@@ -1,6 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Reactive;
+using System.Reactive.Linq;
 using AlienUniverseDatabase.Models;
+using ReactiveUI;
 
 namespace AlienUniverseDatabase.ViewModels;
 
@@ -114,4 +117,46 @@ public class MainWindowViewModel : ViewModelBase
                 "Film pierwotnie miał nosić tytuł „Paradise Lost”; Scott planował jeszcze jedną część łączącą fabułę z oryginalnym „Obcym”."
         }
     };
+     
+    public ReactiveCommand<Film?, Unit> RemoveFilmCommand { get; }
+    public ReactiveCommand<Unit, Unit> AddItemCommand { get; }
+    
+    public ReactiveCommand<Unit, Unit> SummaryButton { get; }
+
+
+    [Reactive]
+    public Film? SelectedItem { get; set; }
+    
+    [Reactive]
+    public string NewFilm { get; set; } = string.Empty;
+
+    [Reactive] 
+    public Film NewFilmEntry { get; set; } = new Film();
+    
+    public Interaction<Film, Unit> ShowSummaryWindow { get; } 
+    
+    [Reactive] 
+    public string Name { get; set; } = "";
+
+    public MainWindowViewModel()
+    {
+        AddItemCommand = ReactiveCommand.Create(() =>
+        {
+            Films.Add(NewFilmEntry);
+            NewFilmEntry = new Film();
+        });
+    
+        RemoveFilmCommand = ReactiveCommand.Create<Film?>(Film =>
+        {
+            if (Film == null || !Films.Contains(Film)) return;
+            Films.Remove(Film);
+        });
+    
+        ShowSummaryWindow = new Interaction<Film, Unit>();
+        
+        SummaryButton = ReactiveCommand.CreateFromTask(async () =>
+        {
+            await ShowSummaryWindow.Handle(SelectedItem!);
+        });
+    }
 }
